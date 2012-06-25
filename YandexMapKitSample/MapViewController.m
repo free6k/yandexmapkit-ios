@@ -10,6 +10,7 @@
  */
 
 #import "MapViewController.h"
+#import "Settings.h"
 
 @interface MapViewController ()
 
@@ -44,8 +45,13 @@
 #pragma mark - Helpers
 
 - (void)configureAndInstallMapView {
-    // Replace with your own Yandex Map Kit API key
-    self.mapView.apiKey = nil;
+    NSString *apiKey = [Settings sharedSettings].apiKey;
+    
+    if (![apiKey length]) {
+        // Replace with your own Yandex Map Kit API key
+        apiKey = nil;
+    }
+    self.mapView.apiKey = apiKey;
 }
 
 #pragma mark - Properties

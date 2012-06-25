@@ -11,6 +11,7 @@
 
 #import "RootViewController.h"
 #import "Sample.h"
+#import "SettingsViewController.h"
 
 @interface RootViewController ()
 
@@ -32,6 +33,12 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IBAction)onSettingsTapped:(id)sender {
+    SettingsViewController *vc = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:vc animated:YES];
 }
 
 #pragma mark - View lifecycle
