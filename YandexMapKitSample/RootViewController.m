@@ -39,6 +39,7 @@
     SettingsViewController *vc = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:vc animated:YES];
+    [vc release];
 }
 
 #pragma mark - View lifecycle
