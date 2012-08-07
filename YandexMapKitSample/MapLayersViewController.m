@@ -13,6 +13,8 @@
 
 @interface MapLayersViewController ()
 
+@property(nonatomic, retain) NSMutableArray *layers;
+
 - (void)subscribeForMapLayerUpdates;
 - (void)unsubscribeFromLayerUpdates;
 - (void)updateMapLayers;
@@ -64,10 +66,12 @@
 - (void)updateMapLayers {
     NSArray * layerInfos = self.mapView.configuration.mapLayers.infos;
     NSMutableArray * layerTitles = [[NSMutableArray alloc] initWithCapacity:[layerInfos count]];
+    self.layers = [NSMutableArray arrayWithCapacity:[layerInfos count]];
     
     for (YMKMapLayerInfo * layerInfo in layerInfos) {
         if (layerInfo.auxiliary == NO) {
             [layerTitles addObject:layerInfo.localizedName];
+            [self.layers addObject:layerInfo];
         }
     }
     
@@ -86,7 +90,8 @@
 
 - (void)layerChange:(UISegmentedControl *)sender {
     NSInteger index = sender.selectedSegmentIndex;
-    self.mapView.visibleLayerIdentifier = index + 1;
+    YMKMapLayerInfo *layerInfo = [self.layers objectAtIndex:index];
+    self.mapView.visibleLayerIdentifier = layerInfo.identifier;
 }
 
 - (void)subscribeForMapLayerUpdates {
@@ -110,6 +115,9 @@
 
 - (void)dealloc {
     [self unsubscribeFromLayerUpdates];
+    
+    self.layers = nil;
+    
     [super dealloc];
 }
 
